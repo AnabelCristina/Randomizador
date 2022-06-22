@@ -93,7 +93,7 @@ namespace Randomizador.Controllers
 
             if (retorno.Sucesso)
             {
-                return Ok(retorno.ResultadoP);
+                return Ok(retorno.ObjetoRetorno);
             }
             else
             {

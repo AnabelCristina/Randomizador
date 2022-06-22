@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<PersonagensService>();
 builder.Services.AddTransient<LugaresService>();
 builder.Services.AddTransient<AcoesService>();
+builder.Services.AddTransient<ObjetosService>();
 
 string connectionString = "Server=.\\SQLExpress;Database=Randomizador;Trusted_Connection=True;";
 // se não estiver usando o SQLExpress tente

@@ -12,24 +12,24 @@ namespace Randomizador.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LugaresController : ControllerBase
+    public class ObjetosController : ControllerBase
     {
-        private readonly LugaresService lugaresService;
+        private readonly ObjetosService ObjetosService;
 
-        public LugaresController(LugaresService lugaresService)
+        public ObjetosController(ObjetosService ObjetosService)
         {
-            this.lugaresService = lugaresService;
+            this.ObjetosService = ObjetosService;
         }
 
         [HttpGet]
-        public IEnumerable<Lugar> Get()
+        public IEnumerable<Objeto> Get()
         {
-            return lugaresService.ListarTodos();
+            return ObjetosService.ListarTodos();
         }
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var retorno = lugaresService.PesquisarPorId(id);
+            var retorno = ObjetosService.PesquisarPorId(id);
 
             if (retorno.Sucesso)
             {
@@ -43,7 +43,7 @@ namespace Randomizador.Controllers
         [HttpGet("nome/{nomeParam}")]
         public IActionResult GetByNome(string nomeParam) // nome do parametro deve ser o mesmo do {}
         {
-            var retorno = lugaresService.PesquisarPorNome(nomeParam);
+            var retorno = ObjetosService.PesquisarPorNome(nomeParam);
 
             if (retorno.Sucesso)
             {
@@ -57,12 +57,12 @@ namespace Randomizador.Controllers
 
         [HttpPost]
         // FromBody para indicar de o corpo da requisição deve ser mapeado para o modelo
-        public IActionResult Post([FromBody] LugarCreateRequest postModel)
+        public IActionResult Post([FromBody] ObjetoCreateRequest postModel)
         {
             //Validação modelo de entrada
             if (ModelState.IsValid)
             {
-                var retorno = lugaresService.CadastrarNovo(postModel);
+                var retorno = ObjetosService.CadastrarNovo(postModel);
                 if (!retorno.Sucesso)
                     return BadRequest(retorno.Mensagem);
                 else
@@ -79,17 +79,17 @@ namespace Randomizador.Controllers
         public IActionResult Delete(int id)
         {
             //Validação modelo de entrada
-            var retorno = lugaresService.Deletar(id);
+            var retorno = ObjetosService.Deletar(id);
             if (!retorno.Sucesso)
                 return BadRequest(retorno.Mensagem);
             return Ok();
 
         }
 
-        [HttpGet("IdLugaresAleatorio")]
+        [HttpGet("IdObjetosAleatorio")]
         public IActionResult GetRandom() // nome do parametro deve ser o mesmo do {}
         {
-            var retorno = lugaresService.GerarLugarAleatorio();
+            var retorno = ObjetosService.GerarObjetoAleatorio();
 
             if (retorno.Sucesso)
             {

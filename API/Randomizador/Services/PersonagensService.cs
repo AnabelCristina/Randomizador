@@ -23,6 +23,7 @@ namespace Randomizador.Services
             var novoPersonagem = new Personagem()
             {
                 Nome = model.Nome,
+                Franquia = model.Franquia,
             };
 
             _dbContext.Add(novoPersonagem);
@@ -51,7 +52,7 @@ namespace Randomizador.Services
 
         public ServiceResponse<Personagem> GerarPersonagemAleatorio()
         {
-            var resultado = _dbContext.Personagens.OrderBy(x => Guid.NewGuid()).Take(1);
+            var resultado = _dbContext.Personagens.OrderBy(x => Guid.NewGuid()).Take(1).FirstOrDefault();
 
             if (resultado == null)
                 return new ServiceResponse<Personagem>("Não encontrado!");

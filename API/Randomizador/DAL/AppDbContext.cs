@@ -17,11 +17,14 @@ namespace Randomizador.DAL
         public virtual DbSet<Acao> Acoes { get; set; }
         public virtual DbSet<Lugar> Lugares { get; set; }
 
+        public virtual DbSet<Objeto> Objetos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Personagem>(entity =>
             {
                 entity.Property(x => x.Nome).IsUnicode(false);
+                entity.Property(x => x.Franquia).IsUnicode(false);
             });
 
             modelBuilder.Entity<Acao>(entity =>
@@ -32,6 +35,11 @@ namespace Randomizador.DAL
             modelBuilder.Entity<Lugar>(entity =>
             {
                 entity.Property(x => x.lugarPersonagem).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Objeto>(entity =>
+            {
+                entity.Property(x => x.objeto).IsUnicode(false);
             });
         }
     }

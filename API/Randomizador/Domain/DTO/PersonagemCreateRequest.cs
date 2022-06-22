@@ -8,6 +8,8 @@ namespace Randomizador.Domain.DTO
         [Required(AllowEmptyStrings = false)]
         public string Nome { get; set; }
 
+        public string Franquia { get; set; }
+
         //int? e Required????
         //Sem isso este erro nunca vai acontecer.
         //Com um int normal, o valor padrão vai sempre ser 0

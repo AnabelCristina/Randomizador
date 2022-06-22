@@ -22,32 +22,10 @@ namespace Randomizador.Services.Base
             ObjetoRetorno = default;
         }
 
-        public ServiceResponse(IQueryable<Acao> resultado)
-        {
-            Sucesso = true;
-            Mensagem = String.Empty;
-            Resultado = resultado;
-        }
-
-        public ServiceResponse(IQueryable<Lugar> resultado)
-        {
-            Sucesso = true;
-            Mensagem = String.Empty;
-            ResultadoL = resultado;
-        }
-
-        public ServiceResponse(IQueryable<Personagem> resultado)
-        {
-            Sucesso = true;
-            Mensagem = String.Empty;
-            ResultadoP = resultado;
-        }
+        
 
         public bool Sucesso { get; private set; }
         public string Mensagem { get; private set; }
         public T ObjetoRetorno { get; private set; }
-        public IQueryable<Acao> Resultado { get; }
-        public IQueryable<Personagem> ResultadoP { get; }
-        public IQueryable<Lugar> ResultadoL { get; }
     }
 }

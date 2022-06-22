@@ -60,7 +60,7 @@ namespace Randomizador.Services
 
         public ServiceResponse<Acao> GerarAcaoAleatorio()
         {
-            var resultado = _dbContext.Acoes.OrderBy(x => Guid.NewGuid()).Take(1);
+            var resultado = _dbContext.Acoes.OrderBy(x => Guid.NewGuid()).Take(1).FirstOrDefault();
 
             if (resultado == null)
                 return new ServiceResponse<Acao>("Não encontrado!");

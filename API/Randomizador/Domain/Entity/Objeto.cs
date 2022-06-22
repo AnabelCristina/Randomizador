@@ -6,16 +6,14 @@ using System.Linq;
 
 namespace Randomizador.Domain.Entity
 {
-    [Table ("Personagens")]
-    public class Personagem
+    [Table("Objeto")]
+    public class Objeto
     {
         [Key]
-        public int IdPersonagem { get; set; }
+        public int IdObjeto { get; set; }
 
         [Required]
         [StringLength(255)]
-        public string? Nome { get; set; }
-
-        public string? Franquia { get; set; }
+        public string? objeto { get; set; }
     }
 }

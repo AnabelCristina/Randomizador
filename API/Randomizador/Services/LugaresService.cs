@@ -63,7 +63,7 @@ namespace Randomizador.Services
 
         public ServiceResponse<Lugar> GerarLugarAleatorio()
         {
-            var resultado = _dbContext.Lugares.OrderBy(x => Guid.NewGuid()).Take(1);
+            var resultado = _dbContext.Lugares.OrderBy(x => Guid.NewGuid()).Take(1).FirstOrDefault();
 
             if (resultado == null)
                 return new ServiceResponse<Lugar>("Não encontrado!");
