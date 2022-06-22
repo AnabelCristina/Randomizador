@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Randomizador.Domain.Entity
 {
+    [Table("Lugares")]
     public class Lugar
     {
+        [Key]
         public int IdLugar { get; set; }
-        public string lugarPersonagem { get; set; }
+
+        [Required]
+        [StringLength(255)]
+        public string? lugarPersonagem { get; set; }
     }
 }

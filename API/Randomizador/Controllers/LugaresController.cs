@@ -85,5 +85,20 @@ namespace Randomizador.Controllers
             return Ok();
 
         }
+
+        [HttpGet("IdLugaresAleatorio")]
+        public IActionResult GetRandom() // nome do parametro deve ser o mesmo do {}
+        {
+            var retorno = lugaresService.GerarLugarAleatorio();
+
+            if (retorno.Sucesso)
+            {
+                return Ok(retorno.ResultadoL);
+            }
+            else
+            {
+                return NotFound(retorno.Mensagem);
+            }
+        }
     }
 }

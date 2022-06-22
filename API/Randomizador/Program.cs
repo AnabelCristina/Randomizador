@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Randomizador.DAL;
 using Randomizador.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<PersonagensService>();
 builder.Services.AddTransient<LugaresService>();
 builder.Services.AddTransient<AcoesService>();
+
+string connectionString = "Server=.\\SQLExpress;Database=Randomizador;Trusted_Connection=True;";
+// se não estiver usando o SQLExpress tente
+// Server=localhost;Database=Randomizador;Trusted_Connection=True;
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 

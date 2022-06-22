@@ -85,5 +85,20 @@ namespace Randomizador.Controllers
             return Ok();
 
         }
+
+        [HttpGet("IdPersonagensAleatorio")]
+        public IActionResult GetRandom() // nome do parametro deve ser o mesmo do {}
+        {
+            var retorno = personagemService.GerarPersonagemAleatorio();
+
+            if (retorno.Sucesso)
+            {
+                return Ok(retorno.ResultadoP);
+            }
+            else
+            {
+                return NotFound(retorno.Mensagem);
+            }
+        }
     }
 }

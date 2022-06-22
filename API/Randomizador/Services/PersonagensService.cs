@@ -4,41 +4,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Randomizador.Services.Base;
+using Randomizador.DAL;
 
 namespace Randomizador.Services
 {
     public class PersonagensService
     {
-        private static List<Personagem> listadePersonagens; // fake, só para aprendizado
-        private static int proximoId = 1;
-        //iniciar a lista de Personagens no construtor da classe
-        public PersonagensService()
-        {
+        private readonly AppDbContext _dbContext;
 
-            if (listadePersonagens == null)
-            {
-                listadePersonagens = new List<Personagem>();
-                listadePersonagens.Add(new Personagem()
-                {
-                    IdPersonagem = proximoId++,
-                    Nome = "Killjoy"
-                });
-                listadePersonagens.Add(new Personagem()
-                {
-                    IdPersonagem = proximoId++,
-                    Nome = "Viper"
-                });
-                listadePersonagens.Add(new Personagem()
-                {
-                    IdPersonagem = proximoId++,
-                    Nome = "Guts"
-                });
-                listadePersonagens.Add(new Personagem()
-                {
-                    IdPersonagem = proximoId++,
-                    Nome = "Anabel"
-                });
-            }
+        public PersonagensService(AppDbContext dbContext)
+        {
+            _dbContext = dbContext;
         }
 
         public ServiceResponse<Personagem> CadastrarNovo(PersonagemCreateRequest model)
@@ -46,18 +22,18 @@ namespace Randomizador.Services
 
             var novoPersonagem = new Personagem()
             {
-                IdPersonagem = proximoId++,
                 Nome = model.Nome,
             };
 
-            listadePersonagens.Add(novoPersonagem);
+            _dbContext.Add(novoPersonagem);
+            _dbContext.SaveChanges();
 
             return new ServiceResponse<Personagem>(novoPersonagem);
         }
 
         public List<Personagem> ListarTodos()
         {
-            return listadePersonagens;
+            return _dbContext.Personagens.ToList();
         }
 
         public ServiceResponse<Personagem> PesquisarPorId(int id)
@@ -65,7 +41,18 @@ namespace Randomizador.Services
             // Lambda Expression / Expressões lambda
             // Operação em conjunto de dados
             // select top 1 * from personagens x where x.IdPersonagem == id 
-            var resultado = listadePersonagens.Where(x => x.IdPersonagem == id).FirstOrDefault();
+            var resultado = _dbContext.Personagens.FirstOrDefault(x => x.IdPersonagem == id);
+            if (resultado == null)
+                return new ServiceResponse<Personagem>("Não encontrado!");
+            else
+                return new ServiceResponse<Personagem>(resultado);
+
+        }
+
+        public ServiceResponse<Personagem> GerarPersonagemAleatorio()
+        {
+            var resultado = _dbContext.Personagens.OrderBy(x => Guid.NewGuid()).Take(1);
+
             if (resultado == null)
                 return new ServiceResponse<Personagem>("Não encontrado!");
             else
@@ -78,7 +65,7 @@ namespace Randomizador.Services
             // Lambda Expression / Expressões lambda
             // Operação em conjunto de dados
             // select top 1 * from personagens x where x.IdPersonagem == id 
-            var resultado = listadePersonagens.Where(x => x.Nome == nome).FirstOrDefault();
+            var resultado = _dbContext.Personagens.FirstOrDefault(x => x.Nome == nome);
             if (resultado == null)
                 return new ServiceResponse<Personagem>("Não encontrado!");
             else
@@ -88,13 +75,13 @@ namespace Randomizador.Services
         public ServiceResponse<bool> Deletar(int id)
         {
             // select top 1 * from albuns x where x.IdAlbum == id 
-            var resultado = listadePersonagens.Where(x => x.IdPersonagem == id).FirstOrDefault();
+            var resultado = _dbContext.Personagens.FirstOrDefault(x => x.IdPersonagem == id);
 
             if (resultado == null)
                 return new ServiceResponse<bool>("Album não encontrado!");
 
-            //tudo certo, só atualizar
-            listadePersonagens.Remove(resultado);
+            _dbContext.Personagens.Remove(resultado);
+            _dbContext.SaveChanges(); ;
 
             return new ServiceResponse<bool>(true);
         }
