@@ -1,14 +1,20 @@
 <template>
-  <div id="app">
-      hi
-  </div>
+  <v-app>
+    <div id="app">
+      <h1>HI</h1>
+      <TesteIntegracao />
+    </div>
+  </v-app>
 </template>
 
+
 <script>
+import TesteIntegracao from './components/TesteIntegracao.vue'
 
 export default {
   name: 'App',
   components: {
+    TesteIntegracao
   }
 }
 </script>
